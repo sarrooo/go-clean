@@ -1,0 +1,12 @@
+quiet: False
+disable-version-string: True
+with-expecter: True
+mockname: "{{.InterfaceName}}"
+filename: "{{.MockName}}.go"
+dir: mocks/
+outpkg: mocks
+all: True
+packages:
+  github.com/sarrooo/go-clean:
+    config:
+      recursive: True

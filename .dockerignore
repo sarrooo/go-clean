@@ -1,0 +1,27 @@
+# Exclude common Go files and directories
+*.log
+*.out
+/bin/
+/pkg/
+/vendor/
+./server
+
+# Exclude files and directories that are not needed in the Docker image
+.dockerignore
+docker-compose.yml
+.mockery.yml
+Makefile
+.git/
+.github/
+.gitignore
+.vscode/
+.idea/
+docs/
+*.md
+LICENSE
+COPYRIGHT
+
+# Tests files
+tests/
+mocks/
+*_test.go

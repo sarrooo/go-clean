@@ -10,6 +10,21 @@
   Go API boilerplate, including Clean Architecture, Testing, Gin and GORM.
 </p>
 
+# Table of Contents
+
+- [Getting Started](#getting-started)
+- [Tools](#tools)
+- [Makefile Targets](#makefile-targets)
+- [Architecture](#architecture)
+- [View Models](#view-models)
+- [Repository](#repository)
+- [Error Handling](#error-handling)
+- [Tests](#tests)
+- [Naming](#naming-1)
+- [Feedbacks](#feedbacks)
+- [License](#license)
+- [Author](#author)
+
 # Getting Started
 
 ```bash
@@ -30,6 +45,69 @@ make build
 - [Mockery](https://vektra.github.io/mockery/latest/) for mocks generation.
 - [golangci-lint](https://golangci-lint.run/) for linting.
 - [validator](https://github.com/go-playground/validator) for data validation.
+
+# Architecture Overview
+
+This architectural design adheres to the principles of the Clean Architecture, emphasizing separation of concerns and maintainability. The system is structured into three key layers:
+
+- **Controllers:** Responsible for handling incoming requests, interacting with services, and managing the flow of data to and from the client.
+
+- **Services (Use Cases):** Encompasses the business logic and use cases of the application. Services handle the core functionality, ensuring a clear distinction between application-specific rules and external concerns.
+
+- **Repositories (Entities):** Manages the data storage and retrieval, providing a clean interface for the application to interact with the underlying database entities.
+
+Key Features of Our Architecture:
+
+- **Centralized Input and Output Handling:** The architecture ensures a centralized approach to handling request input and response output, promoting consistency and clarity in data flow.
+
+- **Centralized and Normalized Error Handling:** We have implemented a unified error handling strategy across the entire system. By using normalized error codes, we enhance the predictability and manageability of error scenarios.
+
+- **Robust Testing Strategy:** Our testing strategy is comprehensive, covering various levels:
+  - Unit tests ensure the individual components function as expected.
+  - Table Driven Tests enhance code readability and maintainability.
+  - Mocks generation simplifies testing by creating mock objects for dependencies.
+  - Code coverage analysis ensures a thorough examination of the codebase.
+
+- **API Documentation:** A well-documented API is crucial for developers and users alike. This architecture includes API documentation, making it easier to understand and interact with the exposed endpoints.
+
+## Folder Structure 📁
+
+```bash
+.
+├── Dockerfile
+├── .mockery.yaml => Mockery configuration file
+├── LICENSE
+├── Makefile
+├── README.md
+├── cmd
+│   └── main.go
+├── docker-compose.yml
+├── docs
+│   └── swagger.yaml => Generated YAML file
+├── go.mod
+├── go.sum
+├── internal
+│   ├── database => Handles database connection (Gorm)
+│   ├── errcode => Defines all error types and codes
+│   ├── controllers => Contains API handlers and middlewares
+│   ├── logger => Configures the logger
+│   ├── models => Houses database data models
+│   ├── dto => Defines intermediate data models
+│   ├── repositories => Manages repositories interacting with the database
+│   ├── services => Implements business logic
+│   ├── ... => Other packages
+│   └── viewmodels => Defines request view models
+└── mocks => Generated mock code
+```
+
+Our folder structure is designed for clarity and modularity, ensuring each component resides in its designated location for ease of navigation and maintenance. This organized structure contributes to a scalable and maintainable codebase.
+
+## Resources 🪵
+
+- [https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) : Blog post that explains principles of the **Clean Architecture**
+- [https://www.youtube.com/watch?v=goC-gCNWhS4](https://youtu.be/goC-gCNWhS4?si=C1W1cdv5_oLD4hVI) : Youtube video that give us a good example of clean architecture implementation to make a Golang API
+- [github.com/ruslantsyganok/clean_arcitecture_golang_example](http://github.com/ruslantsyganok/clean_arcitecture_golang_example) : Github repository of the video above
+- [https://irahardianto.github.io/service-pattern-go/](https://irahardianto.github.io/service-pattern-go/) : Blog post that explains also Golang API implementation in lines with the principles of the **Clean Architecture**
 
 # Makefile Targets
 
@@ -52,65 +130,6 @@ This project includes a Makefile to streamline common development tasks. Here ar
 - **`serve-swagger`**: Serves the generated Swagger documentation on a local server.
 
 - **`generate-mocks`**: Generates mock code using the `mockery` tool for easier testing.
-
-
-# Architecture
-
-We constructed this architecture in line with the principles of the **Clean Architecture**
-
-Our system is composed of 3 layers:
-- **Controllers**
-- **Services** (Use Cases)
-- **Repositories** (Entities)
-
-- Request output and input centralized
-- Centralized and Normalized error handling strategy
-- Strong testing strategy
-    - Unit tests
-    - Table Driven Tests
-    - Mocks generation
-    - Code coverage
-- API Documentation
-
-## Folders 📁
-
-```bash
-.
-├── CODE_OF_CONDUCT.md
-├── CODE_OF_TESTING.md
-├── CONTRIBUTING.md
-├── COPYRIGHT
-├── Dockerfile
-├── LICENSE
-├── Makefile
-├── README.md
-├── cmd
-│   └── main.go
-├── docker-compose.yml
-├── docs
-│   └── swagger.yaml => Generated YAML file
-├── go.mod
-├── go.sum
-├── internal
-│   ├── database => Handle database connection (Gorm)
-│   ├── errcode => All error types and codes
-│   ├── controllers => API handlers and middlewares
-│   ├── logger => Logger configuration
-│   ├── models => Database data models
-│   ├── dto => intermediate data models
-│   ├── repositories => Repositories that interact with the database
-│   ├── services => Business logic
-│   ├── ... => Other package
-│   └── viewmodels => Request's view models
-└── mocks => Generated mock code
-```
-
-## Resources 🪵
-
-- [https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) : Blog post that explains principles of the **Clean Architecture**
-- [https://www.youtube.com/watch?v=goC-gCNWhS4](https://youtu.be/goC-gCNWhS4?si=C1W1cdv5_oLD4hVI) : Youtube video that give us a good example of clean architecture implementation to make a Golang API
-- [github.com/ruslantsyganok/clean_arcitecture_golang_example](http://github.com/ruslantsyganok/clean_arcitecture_golang_example) : Github repository of the video above
-- [https://irahardianto.github.io/service-pattern-go/](https://irahardianto.github.io/service-pattern-go/) : Blog post that explains also Golang API implementation in lines with the principles of the **Clean Architecture**
 
 # View Models
 The **viewmodel** package defines all data type used by API handlers.

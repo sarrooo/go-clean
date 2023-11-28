@@ -13,8 +13,7 @@ import (
 	"github.com/sarrooo/go-clean/internal/models"
 )
 
-// RegisterUser creates a new user in the database, and sends a welcome email
-// If isEmailVerified is true, the user is created with the email verified (by example using oauth)
+// RegisterUser creates a new user in the database
 func (svc *Service) RegisterUser(registerUser *dto.RegisterUser) (user *models.User, err error) {
 	user, err = svc.globalRepository.User.GetByEmail(registerUser.Email)
 	if err != nil {
